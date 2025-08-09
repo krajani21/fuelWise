@@ -41,175 +41,159 @@ body::before {
   }
 }
 
-
-/* ---------- LOGIN PAGE WRAPPER ---------- */
-.login-wrapper {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background: transparent;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+/* ---------- BOOTSTRAP GLASSMORPHISM OVERRIDES ---------- */
+.bg-glass {
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-/* ---------- LOGIN CARD ---------- */
-.login-card {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-radius: 16px;
-  padding: 40px 30px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.form-control.bg-glass {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-/* ---------- TYPOGRAPHY ---------- */
-.login-title {
-  font-size: 26px;
-  font-weight: 700;
-  color: #ffffff;
-  text-align: center;
+.form-control.bg-glass::placeholder {
+  color: #e0e0e0 !important;
 }
 
-.login-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: #dddddd;
+.form-control.bg-glass:focus {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
 }
 
-/* ---------- INPUTS ---------- */
-.login-input {
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  outline: none;
-  transition: background-color 0.3s ease;
+.btn-primary {
+  background-color: #111111 !important;
+  border-color: #111111 !important;
+  color: #ffffff !important;
 }
 
-.login-input::placeholder {
-  color: #e0e0e0;
+.btn-primary:hover {
+  background-color: #333333 !important;
+  border-color: #333333 !important;
 }
 
-.login-input:focus {
-  background-color: rgba(255, 255, 255, 0.3);
+.btn-outline-light {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
 }
 
-/* ---------- BUTTON ---------- */
-.login-button {
-  background-color: #111111;
-  color: #ffffff;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.btn-outline-light:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
 }
 
-.login-button:hover {
-  background-color: #333333;
+.btn-outline-primary {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
 }
 
-/* ---------- ERROR ---------- */
-.login-error {
-  color: #ff4d4d;
-  font-size: 14px;
-  text-align: center;
-  margin-top: -10px;
+.btn-outline-primary:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  color: #ffffff !important;
 }
 
-/* ---------- FOOTER ---------- */
-.login-footer {
-  text-align: center;
-  margin-top: 10px;
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.3) !important;
 }
 
-.forgot-password {
-  font-size: 14px;
-  color: #ccccff;
-  text-decoration: none;
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1) !important;
 }
 
-.forgot-password:hover {
-  text-decoration: underline;
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }
 
-/* ---------- LANDING PAGE ---------- */
-.landing-card {
-  align-items: center;
-  text-align: center;
+/* ---------- CUSTOM UTILITY CLASSES ---------- */
+.text-white-50 {
+  color: rgba(255, 255, 255, 0.5) !important;
 }
 
-.landing-title {
-  font-size: 26px;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 12px;
+.shadow-lg {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
 }
 
-.landing-subtitle {
-  font-size: 16px;
-  color: #dddddd;
-  margin-bottom: 24px;
-  line-height: 1.5;
-  max-width: 320px;
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
 
-.landing-buttons {
-  display: flex;
-  gap: 12px;
-  flex-direction: column;
-  width: 100%;
-}
-
-.landing-buttons .login-button {
-  width: 100%;
-}
-
-/* ---------- LOGOUT BUTTON ---------- */
-.logout-button {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: #d9534f;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  z-index: 1000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.25s ease;
-}
-
-.logout-button:hover {
-  background-color: #c9302c;
-}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width: 500px) {
-  .login-card {
-    padding: 30px 20px;
+/* ---------- RESPONSIVE IMPROVEMENTS ---------- */
+@media (max-width: 576px) {
+  .container-fluid {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
   }
-
-  .login-title {
-    font-size: 22px;
+  
+  .card-body {
+    padding: 1rem !important;
   }
-
-  .login-button {
-    font-size: 15px;
+  
+  .btn {
+    font-size: 0.875rem !important;
   }
+}
+
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 1.1rem !important;
+  }
+  
+  .h1, h1 {
+    font-size: 1.75rem !important;
+  }
+}
+
+/* ---------- ANIMATION ENHANCEMENTS ---------- */
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn {
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+/* ---------- ACCESSIBILITY IMPROVEMENTS ---------- */
+.btn:focus,
+.form-control:focus,
+.navbar-toggler:focus {
+  outline: none !important;
+}
+
+/* ---------- LOADING STATES ---------- */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------- CUSTOM SCROLLBAR ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }

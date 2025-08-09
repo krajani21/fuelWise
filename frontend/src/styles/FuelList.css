@@ -1,4 +1,6 @@
-/* ---------- GLOBAL CONTAINER ---------- */
+/* ---------- LEGACY STYLES (for backward compatibility) ---------- */
+/* These styles are kept for any remaining custom elements that haven't been converted to Bootstrap */
+
 .page-container {
   padding: 40px 20px;
   max-width: 900px;
@@ -10,7 +12,6 @@
   min-height: 100vh;
 }
 
-/* ---------- HEADING ---------- */
 .heading {
   font-size: 28px;
   font-weight: 700;
@@ -19,155 +20,121 @@
   color: #ffffff;
 }
 
-/* ---------- STATION LIST ---------- */
-.station-list {
-  list-style: none;
-  padding: 0;
+/* ---------- CUSTOM ANIMATIONS ---------- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* ---------- STATION CARDS ---------- */
-.station-card {
-  padding: 20px 24px;
-  margin-bottom: 20px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
 }
 
-.station-card:hover {
-  transform: scale(1.015);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
+/* ---------- CUSTOM BADGE STYLES ---------- */
+.badge.bg-success {
+  background-color: #28a745 !important;
+  color: white !important;
 }
 
-.station-card strong {
-  font-size: 1.2em;
-  color: #ffffff;
+.badge.bg-warning {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
 }
 
-.station-meta {
-  font-size: 0.95em;
-  color: #cccccc;
-  margin-top: 6px;
+.badge.bg-info {
+  background-color: #17a2b8 !important;
+  color: white !important;
 }
 
-.station-volume {
-  font-size: 1em;
-  color: #eeeeee;
-  margin-top: 8px;
+/* ---------- CUSTOM CARD ENHANCEMENTS ---------- */
+.card.bg-glass {
+  transition: all 0.3s ease;
 }
 
-/* ---------- INPUT + BUTTON GROUP ---------- */
-.input-group {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 30px;
+.card.bg-glass:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.2) !important;
 }
 
-.input-group label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+/* ---------- CUSTOM BUTTON STYLES ---------- */
+.btn-outline-primary {
+  border-width: 2px;
   font-weight: 500;
-  color: #dddddd;
 }
 
-.input-group input {
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: none;
-  font-size: 1em;
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  backdrop-filter: blur(4px);
-  outline: none;
+.btn-outline-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
 }
 
-.input-group input::placeholder {
-  color: #bbbbbb;
-}
-
-/* ---------- BUTTONS ---------- */
-.input-group button,
-.directions-button {
-  padding: 10px 18px;
-  border-radius: 8px;
-  background-color: #111111;
-  color: white;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.input-group button:hover,
-.directions-button:hover {
-  background-color: #2c2c2c;
-  transform: scale(1.04);
-}
-
-/* ---------- NAV LINKS ---------- */
-.nav-links {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.nav-button {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.25s ease;
-  border: 1px solid transparent;
-}
-
-.nav-button:hover {
-  background-color: #ffffff;
-  color: #111;
-  border: 1px solid #ffffff;
-}
-
-/* ---------- SAVINGS TEXT ---------- */
-.savings-text {
-  color: #00e676;
-  font-weight: 600;
-  margin-top: 6px;
-}
-
-.comparison-text {
-  color: #ff4d4d;
-  font-weight: 600;
-  margin-top: 6px;
-}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width: 600px) {
-  .input-group {
-    flex-direction: column;
-    align-items: stretch;
+/* ---------- RESPONSIVE ENHANCEMENTS ---------- */
+@media (max-width: 576px) {
+  .card-body {
+    padding: 1rem !important;
   }
-
-  .input-group input,
-  .input-group button {
-    width: 100%;
+  
+  .badge {
+    font-size: 0.75rem !important;
   }
-
-  .nav-links {
-    flex-direction: column;
-    align-items: center;
+  
+  .btn {
+    padding: 0.375rem 0.75rem !important;
+    font-size: 0.875rem !important;
   }
+}
 
-  .nav-button {
-    width: 100%;
-    text-align: center;
+@media (max-width: 768px) {
+  .card-title {
+    font-size: 1.1rem !important;
   }
+  
+  .text-white-50 {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* ---------- LOADING STATES ---------- */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- ACCESSIBILITY IMPROVEMENTS ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- FOCUS INDICATORS ---------- */
+.btn:focus-visible,
+.form-control:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
 }

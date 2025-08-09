@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Container, Row, Col, Form, Button, Alert, Card } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -35,40 +36,59 @@ const Login = () => {
   };
 
   return (
-    <div className="login-wrapper">
-      <form onSubmit={handleSubmit} className="login-card">
-        <h2 className="login-title">Welcome Back</h2>
+    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center px-3">
+      <Row className="w-100 justify-content-center">
+        <Col xs={12} sm={10} md={8} lg={6} xl={4}>
+          <Card className="bg-glass border-0 shadow-lg">
+            <Card.Body className="p-4 p-md-5">
+              <h2 className="text-center text-white fw-bold mb-4">Welcome Back</h2>
 
-        <label htmlFor="email" className="login-label">Email</label>
-        <input
-          name="email"
-          type="email"
-          id="email"
-          placeholder="you@example.com"
-          value={form.email}
-          onChange={handleChange}
-          required
-          className="login-input"
-        />
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label className="text-white-50">Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                    className="bg-glass border-0"
+                  />
+                </Form.Group>
 
-        <label htmlFor="password" className="login-label">Password</label>
-        <input
-          name="password"
-          type="password"
-          id="password"
-          placeholder="Enter your password"
-          value={form.password}
-          onChange={handleChange}
-          required
-          className="login-input"
-        />
+                <Form.Group className="mb-4">
+                  <Form.Label className="text-white-50">Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    value={form.password}
+                    onChange={handleChange}
+                    required
+                    className="bg-glass border-0"
+                  />
+                </Form.Group>
 
-        {error && <p className="login-error">{error}</p>}
+                {error && (
+                  <Alert variant="danger" className="text-center mb-3">
+                    {error}
+                  </Alert>
+                )}
 
-        <button type="submit" className="login-button">Sign In</button>
-
-      </form>
-    </div>
+                <Button 
+                  type="submit" 
+                  variant="primary" 
+                  className="w-100 fw-semibold"
+                >
+                  Sign In
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

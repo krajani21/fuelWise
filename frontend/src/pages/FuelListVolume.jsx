@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, Button, Badge, Form, InputGroup } from 'react-bootstrap';
 import { fetchVolumeBased } from '../api/volumeBased';
 import {calculateDollarSavings} from '../utils/savings';
 import '../styles/FuelList.css';
@@ -9,7 +10,6 @@ const FuelListVolume = ({ userLocation }) => {
   const [efficiency, setEfficiency] = useState("");
   const [submittedAmount, setSubmittedAmount] = useState(null);
   const [submittedEfficiency, setSubmittedEfficiency] = useState(null);
-
 
   useEffect(() => {
     if (userLocation && submittedAmount !== null && submittedEfficiency !== null) {
@@ -35,7 +35,6 @@ const FuelListVolume = ({ userLocation }) => {
     }
   }, [userLocation, submittedAmount, submittedEfficiency]);
 
-
   const handleSubmit = () => {
     setSubmittedAmount(parseFloat(fuelAmount));
     setSubmittedEfficiency(parseFloat(efficiency));
@@ -49,69 +48,119 @@ const FuelListVolume = ({ userLocation }) => {
   };
 
   return (
-    <div className="page-container">
-      <h1 className="heading">Fuel Stations by Max Volume (Budget-based)</h1>
+    <Container fluid className="px-3">
+      <Row className="mb-4">
+        <Col xs={12}>
+          <h1 className="text-center text-white fw-bold mb-4">Fuel Stations by Max Volume (Budget-based)</h1>
+        </Col>
+      </Row>
 
       {userLocation && (
-        <div className="input-group">
-          <label>
-            $ Amount:
-            <input
-              type="number"
-              value={fuelAmount}
-              onChange={(e) => setFuelAmount(e.target.value)}
-              placeholder="e.g. 40"
-            />
-          </label>
-
-          <label>
-            Efficiency (L/100km):
-            <input
-              type="number"
-              value={efficiency}
-              onChange={(e) => setEfficiency(e.target.value)}
-              placeholder="e.g. 8.5"
-            />
-          </label>
-
-          <button onClick={handleSubmit}>Submit</button>
-        </div>
+        <Row className="mb-4">
+          <Col xs={12} md={8} lg={6} className="mx-auto">
+            <Card className="bg-glass border-0 shadow-sm">
+              <Card.Body className="p-4">
+                <Row>
+                  <Col xs={12} md={6} className="mb-3">
+                    <Form.Group>
+                      <Form.Label className="text-white-50">$ Amount</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={fuelAmount}
+                        onChange={(e) => setFuelAmount(e.target.value)}
+                        placeholder="e.g. 40"
+                        className="bg-glass border-0"
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col xs={12} md={6} className="mb-3">
+                    <Form.Group>
+                      <Form.Label className="text-white-50">Efficiency (L/100km)</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={efficiency}
+                        onChange={(e) => setEfficiency(e.target.value)}
+                        placeholder="e.g. 8.5"
+                        className="bg-glass border-0"
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <div className="text-center">
+                  <Button variant="primary" onClick={handleSubmit} className="px-4">
+                    Submit
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
       )}
 
-      <ul className="station-list">
+      <Row>
         {stations.map((station, index) => (
-          <li key={index} className="station-card">
-            <strong>{station.station_name}</strong>
-            <div className="station-meta">{station.address} - ${station.price.toFixed(2)}</div>
-            <div className="station-meta">
-              Distance: {station.distance_text} ({station.duration_text})
-            </div>
-            <div className="station-volume">
-              Max Volume: {station.fuel_volume.toFixed(2)} L
-            </div>
+          <Col key={index} xs={12} md={6} lg={4} className="mb-3">
+            <Card className="bg-glass border-0 shadow-sm h-100">
+              <Card.Body className="p-3 p-md-4">
+                <Card.Title className="text-white fw-bold mb-3">
+                  {station.station_name}
+                </Card.Title>
+                
+                <div className="mb-3">
+                  <p className="text-white-50 mb-2 small">
+                    <i className="bi bi-geo-alt me-2"></i>
+                    {station.address}
+                  </p>
+                  
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <Badge bg="success" className="fs-6">
+                      ${station.price.toFixed(2)}
+                    </Badge>
+                    <span className="text-white-50 small">
+                      {station.distance_text}
+                    </span>
+                  </div>
+                  
+                  <p className="text-white-50 small mb-2">
+                    <i className="bi bi-clock me-2"></i>
+                    {station.duration_text}
+                  </p>
+                  
+                  <p className="text-info fw-semibold small mb-2">
+                    <i className="bi bi-fuel-pump me-2"></i>
+                    Max Volume: {station.fuel_volume.toFixed(2)} L
+                  </p>
 
-            {station.isReference && (
-              <div className="station-meta comparison-text">
-                nearest station used for comparison
-              </div>
-            )}
+                  {station.isReference && (
+                    <p className="text-warning fw-semibold small mb-3">
+                      <i className="bi bi-star me-2"></i>
+                      Nearest station used for comparison
+                    </p>
+                  )}
 
-
-            {station.savings && !station.isReference && (
-              <div className="station-meta savings-text">
-                Save ${station.savings} compared to nearest station
-              </div>
-            )}
-            <button
-              className="directions-button"
-              onClick={() => handleGetDirections(station.lat, station.lng)}
-            >
-              Get Directions
-            </button>
-          </li>
+                  {station.savings && !station.isReference && (
+                    <p className="text-success fw-semibold small mb-3">
+                      <i className="bi bi-arrow-down-circle me-2"></i>
+                      Save ${station.savings} compared to nearest station
+                    </p>
+                  )}
+                </div>
+                
+                <Button
+                  variant="outline-primary"
+                  size="sm"
+                  onClick={() => handleGetDirections(station.lat, station.lng)}
+                  className="w-100"
+                >
+                  <i className="bi bi-map me-2"></i>
+                  Get Directions
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-      </ul>
-    </div>
+      </Row>
+    </Container>
   );
 };
 

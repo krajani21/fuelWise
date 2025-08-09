@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
@@ -12,9 +13,15 @@ const LogoutButton = () => {
   };
 
   return (
-    <button onClick={handleLogout} className="logout-button">
+    <Button 
+      onClick={handleLogout} 
+      variant="danger"
+      size="sm"
+      className="position-fixed"
+      style={{ top: '20px', right: '20px', zIndex: 1000 }}
+    >
       Logout
-    </button>
+    </Button>
   );
 };
 
