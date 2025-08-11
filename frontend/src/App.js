@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Container, Row, Col, Button, Nav, Navbar, NavbarBrand, NavbarToggle, Collapse, NavItem, NavLink } from 'react-bootstrap';
+import { Container, Row, Col, Button, Nav, Navbar } from 'react-bootstrap';
 import FuelListVolume from './pages/FuelListVolume';
 import FuelListDistance from './pages/FuelListDistance';
 import Login from './pages/Login';
@@ -73,22 +73,22 @@ const AppContent = ({ userLocation, setUserLocation }) => {
                     onToggle={() => setNavbarExpanded(!navbarExpanded)}
                   >
                     <Container fluid>
-                      <NavbarBrand className="text-white fw-bold">FuelWise</NavbarBrand>
-                      <NavbarToggle aria-controls="basic-navbar-nav" />
-                      <Collapse id="basic-navbar-nav">
-                        <Nav className="ms-auto">
-                          <NavItem>
-                            <NavLink as={Link} to="/distance" className="text-white">
+                      <Navbar.Brand className="text-white fw-bold">FuelWise</Navbar.Brand>
+                      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                      <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="ms-auto" onSelect={() => setNavbarExpanded(false)}>
+                          <Nav.Item>
+                            <Nav.Link as={Link} to="/distance" className="text-white">
                               Sort by Distance
-                            </NavLink>
-                          </NavItem>
-                          <NavItem>
-                            <NavLink as={Link} to="/volume" className="text-white">
+                            </Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link as={Link} to="/volume" className="text-white">
                               Sort by Max Volume
-                            </NavLink>
-                          </NavItem>
+                            </Nav.Link>
+                          </Nav.Item>
                         </Nav>
-                      </Collapse>
+                      </Navbar.Collapse>
                     </Container>
                   </Navbar>
                   
@@ -122,22 +122,22 @@ const AppContent = ({ userLocation, setUserLocation }) => {
                     onToggle={() => setNavbarExpanded(!navbarExpanded)}
                   >
                     <Container fluid>
-                      <NavbarBrand className="text-white fw-bold">FuelWise</NavbarBrand>
-                      <NavbarToggle aria-controls="basic-navbar-nav" />
-                      <Collapse id="basic-navbar-nav">
-                        <Nav className="ms-auto">
-                          <NavItem>
-                            <NavLink as={Link} to="/distance" className="text-white">
+                      <Navbar.Brand className="text-white fw-bold">FuelWise</Navbar.Brand>
+                      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                      <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="ms-auto" onSelect={() => setNavbarExpanded(false)}>
+                          <Nav.Item>
+                            <Nav.Link as={Link} to="/distance" className="text-white">
                               Sort by Distance
-                            </NavLink>
-                          </NavItem>
-                          <NavItem>
-                            <NavLink as={Link} to="/volume" className="text-white">
+                            </Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link as={Link} to="/volume" className="text-white">
                               Sort by Max Volume
-                            </NavLink>
-                          </NavItem>
+                            </Nav.Link>
+                          </Nav.Item>
                         </Nav>
-                      </Collapse>
+                      </Navbar.Collapse>
                     </Container>
                   </Navbar>
                   
