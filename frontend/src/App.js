@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Container, Row, Col, Button, Nav, Navbar } from 'react-bootstrap';
 import FuelListVolume from './pages/FuelListVolume';
@@ -26,6 +26,7 @@ const AppContent = ({ userLocation, setUserLocation }) => {
           lng: position.coords.longitude,
         };
         setUserLocation(coords);
+        sessionStorage.setItem('userLocation', JSON.stringify(coords));
         console.log("user location: ", coords);
       },
       (error) => {
@@ -54,17 +55,19 @@ const AppContent = ({ userLocation, setUserLocation }) => {
             element={
               <PrivateRoute>
                 <div>
-                  <Row className="mb-4">
-                    <Col xs={12} className="d-flex justify-content-center">
-                      <Button 
-                        variant="outline-light" 
-                        onClick={handleGetLocation}
-                        className="me-3"
-                      >
-                        Get Location
-                      </Button>
-                    </Col>
-                  </Row>
+                  {!userLocation && (
+                    <Row className="mb-4">
+                      <Col xs={12} className="d-flex justify-content-center">
+                        <Button 
+                          variant="outline-light" 
+                          onClick={handleGetLocation}
+                          className="me-3"
+                        >
+                          Get Location
+                        </Button>
+                      </Col>
+                    </Row>
+                  )}
                   
                   <Navbar 
                     expand="lg" 
@@ -103,17 +106,19 @@ const AppContent = ({ userLocation, setUserLocation }) => {
             element={
               <PrivateRoute>
                 <div>
-                  <Row className="mb-4">
-                    <Col xs={12} className="d-flex justify-content-center">
-                      <Button 
-                        variant="outline-light" 
-                        onClick={handleGetLocation}
-                        className="me-3"
-                      >
-                        Get Location
-                      </Button>
-                    </Col>
-                  </Row>
+                  {!userLocation && (
+                    <Row className="mb-4">
+                      <Col xs={12} className="d-flex justify-content-center">
+                        <Button 
+                          variant="outline-light" 
+                          onClick={handleGetLocation}
+                          className="me-3"
+                        >
+                          Get Location
+                        </Button>
+                      </Col>
+                    </Row>
+                  )}
                   
                   <Navbar 
                     expand="lg" 
@@ -154,6 +159,18 @@ const AppContent = ({ userLocation, setUserLocation }) => {
 
 function App() {
   const [userLocation, setUserLocation] = useState(null);
+
+  useEffect(() => {
+    const savedLocation = sessionStorage.getItem('userLocation');
+    if (savedLocation) {
+      try {
+        setUserLocation(JSON.parse(savedLocation));
+      } catch (error) {
+        console.error('Error parsing saved location:', error);
+        sessionStorage.removeItem('userLocation');
+      }
+    }
+  }, []);
 
   return (
     <AuthProvider>
