@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Badge, Form, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Badge, Form } from 'react-bootstrap';
 import { fetchVolumeBased } from '../api/volumeBased';
 import '../styles/FuelList.css';
 
@@ -62,6 +62,13 @@ const FuelListVolume = ({ userLocation }) => {
     if (valueScore >= 60) return <Badge bg="warning">Good Value</Badge>;
     if (valueScore >= 40) return <Badge bg="info">Fair Value</Badge>;
     return <Badge bg="secondary">Poor Value</Badge>;
+  };
+
+  const getReferenceBadge = (station) => {
+    if (station.price === station.area_stats?.max_price) {
+      return <Badge bg="danger" className="ms-2">Most Expensive</Badge>;
+    }
+    return null;
   };
 
   return (
@@ -172,6 +179,7 @@ const FuelListVolume = ({ userLocation }) => {
                     {station.station_name}
                   </Card.Title>
                   {getValueBadge(station.value_score)}
+                  {getReferenceBadge(station)}
                 </div>
                 
                 <div className="mb-3">

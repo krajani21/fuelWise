@@ -49,6 +49,13 @@ const FuelListDistance = ({ userLocation }) => {
     window.open(url, '_blank');
   };
 
+  const getReferenceBadge = (station) => {
+    if (station.price === station.areaStats?.maxPrice) {
+      return <Badge bg="danger" className="ms-2">Most Expensive</Badge>;
+    }
+    return null;
+  };
+
   return (
     <Container fluid className="px-3">
       <Row className="mb-4">
@@ -103,9 +110,12 @@ const FuelListDistance = ({ userLocation }) => {
           <Col key={index} xs={12} md={6} lg={4} className="mb-3">
             <Card className="bg-glass border-0 shadow-sm h-100">
               <Card.Body className="p-3 p-md-4">
-                <Card.Title className="text-white fw-bold mb-3">
-                  {station.station_name}
-                </Card.Title>
+                <div className="d-flex justify-content-between align-items-start mb-2">
+                  <Card.Title className="text-white fw-bold mb-0">
+                    {station.station_name}
+                  </Card.Title>
+                  {getReferenceBadge(station)}
+                </div>
                 
                 <div className="mb-3">
                   <p className="text-white-50 mb-2 small">
