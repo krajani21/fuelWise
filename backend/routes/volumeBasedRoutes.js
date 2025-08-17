@@ -5,7 +5,7 @@ const { calculateEffectiveFuelVolume } = require("../utils/calculate");
 
 router.post("/", async (req, res) => {
   try {
-    const { origin, budget, efficiency } = req.body;
+    const { origin, budget, efficiency, radius = 5000 } = req.body;
 
     if (
       !origin || !origin.lat || !origin.lng ||
@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
     }
 
     const originString = `${origin.lat},${origin.lng}`;
-    const nearbyUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${originString}&radius=5000&type=gas_station&key=${process.env.GOOGLE_API_KEY}`;
+    const nearbyUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${originString}&radius=${radius}&type=gas_station&key=${process.env.GOOGLE_API_KEY}`;
     const nearbyResponse = await axios.get(nearbyUrl);
     const nearbyStations = nearbyResponse.data.results;
 

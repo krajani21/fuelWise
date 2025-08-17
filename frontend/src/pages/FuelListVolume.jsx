@@ -8,12 +8,14 @@ const FuelListVolume = ({ userLocation }) => {
   const [stations, setStations] = useState([]);
   const [fuelAmount, setFuelAmount] = useState("");
   const [efficiency, setEfficiency] = useState("");
+  const [radius, setRadius] = useState("");
   const [submittedAmount, setSubmittedAmount] = useState(null);
   const [submittedEfficiency, setSubmittedEfficiency] = useState(null);
 
   useEffect(() => {
     if (userLocation && submittedAmount !== null && submittedEfficiency !== null) {
-      fetchVolumeBased(userLocation, submittedAmount, submittedEfficiency)
+      const radiusValue = radius ? parseFloat(radius) * 1000 : undefined;
+      fetchVolumeBased(userLocation, submittedAmount, submittedEfficiency, radiusValue)
         .then((data) => {
           const filtered = data.filter(station => station.fuel_volume !== null);
           const sorted = [...filtered].sort((a, b) => b.fuel_volume - a.fuel_volume);
@@ -33,7 +35,7 @@ const FuelListVolume = ({ userLocation }) => {
           console.error("Failed to fetch volume-based data:", err);
         });
     }
-  }, [userLocation, submittedAmount, submittedEfficiency]);
+  }, [userLocation, submittedAmount, submittedEfficiency, radius]);
 
   const handleSubmit = () => {
     setSubmittedAmount(parseFloat(fuelAmount));
@@ -83,6 +85,21 @@ const FuelListVolume = ({ userLocation }) => {
                         placeholder="e.g. 8.5"
                         className="bg-glass border-0"
                       />
+                    </Form.Group>
+                  </Col>
+                  <Col xs={12} md={6} className="mb-3">
+                    <Form.Group>
+                      <Form.Label className="text-white-50">Search Radius (km)</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={radius}
+                        onChange={(e) => setRadius(e.target.value)}
+                        placeholder="optional"
+                        className="bg-glass border-0"
+                      />
+                      <Form.Text className="text-white-50 small">
+                        Leave empty for default 5km radius
+                      </Form.Text>
                     </Form.Group>
                   </Col>
                 </Row>

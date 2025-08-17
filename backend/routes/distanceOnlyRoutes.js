@@ -5,14 +5,14 @@ const axios = require("axios");
 // POST /api/distances-only
 router.post("/", async (req, res) => {
   try {
-    const { origin } = req.body;
+    const { origin, radius = 5000 } = req.body;
 
     if (!origin || !origin.lat || !origin.lng) {
       return res.status(400).json({ error: "Invalid origin" });
     }
 
     const originString = `${origin.lat},${origin.lng}`;
-    const nearbyUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${originString}&radius=5000&type=gas_station&key=${process.env.GOOGLE_API_KEY}`;
+    const nearbyUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${originString}&radius=${radius}&type=gas_station&key=${process.env.GOOGLE_API_KEY}`;
     const nearbyResponse = await axios.get(nearbyUrl);
     const nearbyStations = nearbyResponse.data.results;
 

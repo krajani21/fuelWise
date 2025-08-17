@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Badge, Form } from 'react-bootstrap';
 import { fetchDistanceOnly } from '../api/distanceOnly';
 import '../styles/FuelList.css';
 import { getNearestStation, calculateCentDifference } from '../utils/savings';
 
 const FuelListDistance = ({ userLocation }) => {
   const [stations, setStations] = useState([]);
+  const [radius, setRadius] = useState("");
 
   useEffect(() => {
     if (userLocation) {
-      fetchDistanceOnly(userLocation)
+      const radiusValue = radius ? parseFloat(radius) * 1000 : undefined;
+      fetchDistanceOnly(userLocation, radiusValue)
         .then((data) => {
           const filtered = data.filter(station => station.distance !== null);
           const sorted = [...filtered].sort((a, b) => a.distance - b.distance);
@@ -27,7 +29,7 @@ const FuelListDistance = ({ userLocation }) => {
           console.error("Failed to fetch distances:", err);
         });
     }
-  }, [userLocation]);
+  }, [userLocation, radius]);
 
   const handleGetDirections = (lat, lng) => {
     const origin = `${userLocation.lat},${userLocation.lng}`;
@@ -43,6 +45,30 @@ const FuelListDistance = ({ userLocation }) => {
           <h1 className="text-center text-white fw-bold mb-4">Fuel Stations Sorted by Distance</h1>
         </Col>
       </Row>
+
+      {userLocation && (
+        <Row className="mb-4">
+          <Col xs={12} md={6} lg={4} className="mx-auto">
+            <Card className="bg-glass border-0 shadow-sm">
+              <Card.Body className="p-4">
+                <Form.Group>
+                  <Form.Label className="text-white-50">Search Radius (km)</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={radius}
+                    onChange={(e) => setRadius(e.target.value)}
+                    placeholder="optional"
+                    className="bg-glass border-0"
+                  />
+                  <Form.Text className="text-white-50 small">
+                    Leave empty for default 5km radius
+                  </Form.Text>
+                </Form.Group>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      )}
 
       <Row>
         {stations.map((station, index) => (
