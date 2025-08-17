@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Badge, Form } from 'react-bootstrap';
 import { fetchDistanceOnly } from '../api/distanceOnly';
 import '../styles/FuelList.css';
-import { getNearestStation, calculateCentDifference } from '../utils/savings';
 
 const FuelListDistance = ({ userLocation }) => {
   const [stations, setStations] = useState([]);
@@ -15,12 +14,24 @@ const FuelListDistance = ({ userLocation }) => {
         .then((data) => {
           const filtered = data.filter(station => station.distance !== null);
           const sorted = [...filtered].sort((a, b) => a.distance - b.distance);
-          const nearest = getNearestStation(filtered);
-          const refPrice = nearest.price;
+          
+          // Calculate area price statistics
+          const avgPrice = sorted.reduce((sum, s) => sum + s.price, 0) / sorted.length;
+          const maxPrice = Math.max(...sorted.map(s => s.price));
+          const minPrice = Math.min(...sorted.map(s => s.price));
 
           const updated = sorted.map((station) => {
-            const centsSaved = calculateCentDifference(refPrice, station.price);
-            return { ...station, centsSaved };
+            const savingsVsAverage = (avgPrice - station.price) * 50; // Assuming 50L fill
+            const savingsVsMostExpensive = (maxPrice - station.price) * 50;
+            const centsSaved = ((avgPrice - station.price) * 100).toFixed(1);
+            
+            return { 
+              ...station, 
+              savingsVsAverage: savingsVsAverage > 0 ? savingsVsAverage : 0,
+              savingsVsMostExpensive: savingsVsMostExpensive > 0 ? savingsVsMostExpensive : 0,
+              centsSaved: centsSaved > 0 ? `${centsSaved}¢/L cheaper than average` : null,
+              areaStats: { avgPrice, maxPrice, minPrice }
+            };
           });
 
           setStations(updated);
@@ -48,7 +59,7 @@ const FuelListDistance = ({ userLocation }) => {
 
       {userLocation && (
         <Row className="mb-4">
-          <Col xs={12} md={6} lg={4} className="mx-auto">
+          <Col xs={12} md={8} lg={6} className="mx-auto">
             <Card className="bg-glass border-0 shadow-sm">
               <Card.Body className="p-4">
                 <Form.Group>
@@ -64,6 +75,23 @@ const FuelListDistance = ({ userLocation }) => {
                     Leave empty for default 5km radius
                   </Form.Text>
                 </Form.Group>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      )}
+
+      {stations.length > 0 && (
+        <Row className="mb-3">
+          <Col xs={12}>
+            <Card className="bg-glass border-0 shadow-sm">
+              <Card.Body className="p-3">
+                <h6 className="text-white mb-2">Area Price Statistics:</h6>
+                <div className="d-flex justify-content-around text-white-50 small">
+                  <span>Average: ${stations[0]?.areaStats?.avgPrice?.toFixed(2)}/L</span>
+                  <span>Lowest: ${stations[0]?.areaStats?.minPrice?.toFixed(2)}/L</span>
+                  <span>Highest: ${stations[0]?.areaStats?.maxPrice?.toFixed(2)}/L</span>
+                </div>
               </Card.Body>
             </Card>
           </Col>
@@ -99,12 +127,26 @@ const FuelListDistance = ({ userLocation }) => {
                     {station.duration_text}
                   </p>
                   
-                  {station.centsSaved && (
-                    <p className="text-success fw-semibold small mb-3">
-                      <i className="bi bi-arrow-down-circle me-2"></i>
-                      {station.centsSaved} than the closest petrol station
-                    </p>
-                  )}
+                  <div className="savings-info mb-3">
+                    {station.centsSaved && (
+                      <p className="text-success fw-semibold small mb-1">
+                        <i className="bi bi-arrow-down-circle me-2"></i>
+                        {station.centsSaved}
+                      </p>
+                    )}
+                    {station.savingsVsAverage > 0 && (
+                      <p className="text-success fw-semibold small mb-1">
+                        <i className="bi bi-arrow-down-circle me-2"></i>
+                        Save ${station.savingsVsAverage.toFixed(2)} vs average (50L fill)
+                      </p>
+                    )}
+                    {station.savingsVsMostExpensive > 0 && (
+                      <p className="text-success fw-semibold small mb-1">
+                        <i className="bi bi-arrow-down-circle me-2"></i>
+                        Save ${station.savingsVsMostExpensive.toFixed(2)} vs most expensive (50L fill)
+                      </p>
+                    )}
+                  </div>
                 </div>
                 
                 <Button
